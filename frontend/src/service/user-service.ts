@@ -1,14 +1,12 @@
-import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:3001';
-
+import AxiosInstance from "@/network/axios";
 
 const userService = () => {
 
     const search = async (page: number = 1, q: string) => {
 
         try {
-            const response = await axios.get(`${API_URL}/users?page=${page}&q=${q}`);
+            const response = await AxiosInstance.get(`/users?page=${page}&q=${q}`);
             return response.data;
         } catch (error) {
             throw error;
@@ -17,7 +15,7 @@ const userService = () => {
 
     const getAll = async (page: number = 1) => {
         try {
-            const response = await axios.get(`${API_URL}/users?page=${page}`);
+            const response = await AxiosInstance.get(`/users?page=${page}`);
             return response.data;
         } catch (error) {
             throw error;
@@ -26,13 +24,12 @@ const userService = () => {
 
     const getById = async (id: number) => {
         try {
-            const response = await axios.get(`${API_URL}/users/${id}`);
-            console.log(response);
-            console.log(response.data);
+            const response = await AxiosInstance.get(`/users/${id}`);
+
 
             return response.data;
         } catch (error) {
-            console.error(`Error fetching user ${id}:`, error);
+
             throw error;
         }
     };
@@ -40,10 +37,9 @@ const userService = () => {
 
     const create = async ({ name, email, password, registration }) => {
         try {
-            const response = await axios.post(`${API_URL}/users`, { name, email, password, registration });
+            const response = await AxiosInstance.post(`/users`, { name, email, password, registration });
             return response.data;
         } catch (error) {
-            console.error(`Error fetching user`);
             throw error;
         }
     };
@@ -51,19 +47,18 @@ const userService = () => {
 
     const update = async ({ id, name, email, password, registration }) => {
         try {
-            const response = await axios.put(`${API_URL}/users/${id}`, { name, email, password, registration });
+            const response = await AxiosInstance.put(`/users/${id}`, { name, email, password, registration });
             return response.data;
         } catch (error) {
-            console.error(`Error fetching user`); throw error;
+            throw error;
         }
     };
 
 
     const remove = async (id: number) => {
         try {
-            await axios.delete(`${API_URL}/users/${id}`);
+            await AxiosInstance.delete(`/users/${id}`);
         } catch (error) {
-            console.error(`Error fetching user`);
             throw error;
         }
     };
